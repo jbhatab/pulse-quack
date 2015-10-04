@@ -11,6 +11,7 @@ module.exports = {
     EDIT_LAST_MESSAGE: null,
     INCOMING_MESSAGE: null,
     NOTIFY: null,
+    FETCH_ROOMS: null,
     SUBSCRIBE: null,
     UNSUBSCRIBE: null,
     USER_LIST_CHANGE: null,

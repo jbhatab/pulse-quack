@@ -28,7 +28,8 @@ var Chat = React.createClass({
 
   getInitialState: function() {
     return {
-      activeRoom: RoomStore.activeRoom()
+      activeRoom: RoomStore.activeRoom(),
+      defaultRoom: RoomStore.defaultRoom()
     };
   },
 
@@ -36,7 +37,8 @@ var Chat = React.createClass({
     if (UserStore.localUser().name === null) {
       this.transitionTo('login');
     } else {
-      Actions.subscribe(this.state.activeRoom);
+      Actions.fetchRooms();
+      Actions.subscribe(this.state.defaultRoom);
     }
   },
 

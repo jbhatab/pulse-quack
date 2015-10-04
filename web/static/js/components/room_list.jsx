@@ -3,11 +3,15 @@ var RoomStore = require('../stores/room_store');
 
 var RoomList = React.createClass({
   render: function() {
+    listed = this.state.listed.map(this._generateChannelLI)
     subscribed = this.state.subscribed.map(this._generateChannelLI);
     unsubscribed = this.state.unsubscribed.map(this._generateChannelLI);
     return(
       <div className="room-list">
         <h4>Channels</h4>
+        <ul>
+          {listed}
+        </ul>
         <ul>
           {subscribed}
         </ul>
@@ -21,6 +25,7 @@ var RoomList = React.createClass({
 
   getInitialState: function() {
     return {
+      listed: RoomStore.listed(),
       subscribed: RoomStore.subscribed(),
       unsubscribed: RoomStore.unsubscribed()
     };

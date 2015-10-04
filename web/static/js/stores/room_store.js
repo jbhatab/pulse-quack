@@ -1,11 +1,16 @@
 var EventEmitter = require('events').EventEmitter;
 var assign = require('object-assign');
+var request = require('superagent');
 var AppDispatcher = require('../dispatcher/app_dispatcher');
 var ActionTypes = require('../constants/constants').ActionTypes;
 var Help = require('../utils/help');
 var QuackSocket = require('../data/socket');
 
 var _rooms = {
+  listed: {
+
+  },
+
   subscribed: {
 
   },
@@ -25,20 +30,40 @@ var RoomStore = assign({}, EventEmitter.prototype, {
   },
 
   _activeRoom: "bestcohort",
+  _defaultRoom: "general",
 
-  activeRoom: function() {
+  activeRoom() {
     return this._activeRoom
   },
 
-  subscribed: function() {
+  defaultRoom() {
+    return this._defaultRoom
+  },
+
+  listed() {
+    return Object.keys(_rooms.listed);
+  },
+
+  subscribed() {
     return Object.keys(_rooms.subscribed);
   },
 
-  unsubscribed: function() {
+  unsubscribed() {
     return Object.keys(_rooms.unsubscribed);
   },
 
-  subscribe: function(roomName) {
+  fetchRooms() {
+    request
+      .get('/some-url')
+      .end(function(err, res){
+        console.log('RESPONSE FROM AJAX CALL')
+        console.log(err)
+        console.log(res)
+          // Do something
+      });
+  },
+
+  subscribe(roomName) {
     if (this.subscribed().indexOf(roomName) !== -1) {
       return null;
     }
@@ -52,7 +77,7 @@ var RoomStore = assign({}, EventEmitter.prototype, {
 
   },
 
-  unsubscribe: function(roomName) {
+  unsubscribe(roomName) {
     if (this.subscribed().indexOf(roomName) !== -1) {
       room = _rooms.subscribed[roomName];
       room.leave();

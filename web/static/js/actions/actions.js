@@ -14,6 +14,10 @@ var dispatch = function(type, data) {
 };
 
 module.exports = {
+  fetchRooms: function() {
+    dispatch(ActionTypes.FETCH_ROOMS);
+  },
+
   createMessage: function(roomName, text) {
     var timestamp = new Date().getTime();
     if (text[0] === SettingsStore.get('escape')) {

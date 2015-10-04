@@ -19,6 +19,8 @@ defmodule Quack.Web do
   def model do
     quote do
       use Ecto.Model
+
+      import Ecto.Query, only: [from: 2]
     end
   end
 
